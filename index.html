@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <title>User form</title>
+</head>
+
+<body>
+    <section class="pt-1">
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <div class="modal-container">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <form id="myform" class="add_user_form">
+                <h1 class="heading">Thêm người dùng</h1>
+                <div class="row">
+                    <div class="form_item">
+                        <input type="input" class="form__field" placeholder="User Name" name="userName" id='userName'
+                            required />
+                        <label for="userName" class="form__label">User Name</label>
+                    </div>
+                    <div class="form_item">
+                        <input type="input" class="form__field" placeholder="Email" name="email" id='email' required />
+                        <label for="email" class="form__label">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form_item">
+                        <input type="input" class="form__field" placeholder="Full Name" name="fullName" id='fullName'
+                            required />
+                        <label for="fullName" class="form__label">Full Name</label>
+                    </div>
+                    <div class="form_item">
+                        <input type="input" class="form__field" placeholder="Phone Number" name="phoneNumber"
+                            id='phoneNumber' required />
+                        <label for="phoneNumber" class="form__label">Phone number</label>
+                    </div>
+                </div>
+                <div class="row form_submit">
+                    <button type="submit" class="btn btn_save">
+                        Save
+                    </button>
+                    <button class="btn btn_reset">
+                        Reset
+                    </button>
+                </div>
+            </form>
+
+            <h1 class="heading">Thông tin người dùng</h1>
+
+            <table>
+                <thead>
+                    <th>STT</th>
+                    <th>User name</th>
+                    <th>Full name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                    <th>Action</th>
+                </thead>
+                <tbody id="Table_body">
+                    <!-- <tr>
+                        <td>1</td>
+                        <td>Bonita.Kub48</td>
+                        <td>Terry</td>
+                        <td>Oral14@gmail.com</td>
+                        <td>2022-02-02</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Bonita.Kub48</td>
+                        <td>Terry</td>
+                        <td>Oral14@gmail.com</td>
+                        <td>2022-02-02</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Bonita.Kub48</td>
+                        <td>Terry</td>
+                        <td>Oral14@gmail.com</td>
+                        <td>2022-02-02</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Bonita.Kub48</td>
+                        <td>Terry</td>
+                        <td>Oral14@gmail.com</td>
+                        <td>2022-02-02</td>
+                        <td></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="./script.js" type="module"></script>
+</body>
+
+</html>
