@@ -46,9 +46,9 @@ renderUser('https://62adc8f4b735b6d16a39c794.mockapi.io/users', [])
 const generateUserId = (list) => {
     let userIdList = list.map(user => +user.id)
     let newId
-    do{
-        newId = Math.floor(Math.random() * 100) + 1
-    }while(userIdList.includes(newId, 0))
+    do {
+        newId = Math.floor(Math.random() * list.length + 1) + 1
+    } while (userIdList.includes(newId, 0))
     return newId
 }
 
