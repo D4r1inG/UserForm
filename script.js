@@ -1,5 +1,15 @@
 let currentUser = {}
 let userList = []
+const successColor = '#0ba360'
+const failColor = '#dc3545'
+const btnReset = document.querySelector(".btn_reset")
+const myForm = document.getElementById('myform')
+const valueInputList = document.querySelectorAll(".form__field")
+
+const modalContent = document.querySelector(".modal-content")
+const myModal = document.getElementById("myModal")
+const closeBtn = document.querySelector(".close")
+
 
 async function getUser(url) {
     try {
@@ -56,6 +66,8 @@ const handleChange = (e) => {
     const { name, value } = e.target
     currentUser[name] = value
 }
+valueInputList.forEach(item => item.addEventListener("blur", handleChange))
+
 
 const handleSubmit = (e) => {
     e.preventDefault()
@@ -64,23 +76,30 @@ const handleSubmit = (e) => {
         top: 1000,
         behavior: "smooth"
     })
+    createNotification("Submit successfully!", true)
     renderUser("", userList)
 }
+myForm.addEventListener("submit", handleSubmit)
+
 
 const handleResetForm = () => {
     for (let i = 0; i < 4; i++) {
         myForm[i].value = ''
     }
 }
+btnReset.addEventListener("click", () => { handleResetForm() })
+
 
 const handleDelete = (e) => {
     userList = userList.filter(user => user.id !== e.target.attributes[0].value)
+    createNotification("User deleted!", true)
     renderUser('', userList)
 }
 
 const handleEdit = (e) => {
     e.preventDefault()
     let newList = userList.map(user => user.id === currentUser.id ? currentUser : user)
+    createNotification("Changes have been saved!", true)
     renderUser('', newList)
     myModal.style.display = "none"
 }
@@ -120,16 +139,32 @@ const showModal = (e) => {
     modalSaveBtn.addEventListener("click", handleEdit)
 }
 
-const btnReset = document.querySelector(".btn_reset")
-const modalContent = document.querySelector(".modal-content")
-const myForm = document.getElementById('myform')
-const valueInputList = document.querySelectorAll(".form__field")
-const myModal = document.getElementById("myModal")
-const closeBtn = document.querySelector(".close")
+const createNotification = (mess, check) => {
+    let notiContainer = document.querySelector('.noti')
+    let notiProgress = document.querySelector('.noti-progress')
+    let notiText = document.querySelector('.noti-text')
+    let notiCheck = document.querySelector('.noti-check')
 
-btnReset.addEventListener("click", () => { handleResetForm() })
-myForm.addEventListener("submit", handleSubmit)
-valueInputList.forEach(item => item.addEventListener("blur", handleChange))
+    notiText.innerHTML = mess
+    notiContainer.classList.add('active')
+    notiProgress.classList.add('active')
+
+    if (!check) {
+        notiCheck.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>'
+        notiContainer.style.borderLeftColor = failColor
+        notiCheck.style.backgroundColor = failColor
+    } else {
+        notiCheck.innerHTML = '<i class="fa fa-check" aria-hidden="true"></i>'
+        notiContainer.style.borderLeftColor = successColor
+        notiCheck.style.backgroundColor = successColor
+    }
+
+    setTimeout(() => {
+        notiProgress.classList.remove('active')
+        notiContainer.classList.remove('active')
+    }, 2000)
+
+}
 
 closeBtn.onclick = function () {
     myModal.style.display = "none";
