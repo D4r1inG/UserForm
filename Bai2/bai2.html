@@ -11,18 +11,17 @@
 </html>
 <script>
     const data = [
-        { id: 999999, name: 'Phòng to nhất', parentId: null },
-        { id: 1, name: 'GHTK', parentId: 999999 },
+        { id: 9999999, name: 'Phòng to nhất', parentId: null },
+        { id: 1, name: 'GHTK', parentId: 9999999 },
         { id: 11, name: 'Phòng CNTT', parentId: 1 },
         { id: 111, name: 'Nhóm 1', parentId: 11 },
         { id: 1111, name: 'Nhóm 1 - Đội 1', parentId: 111 },
         { id: 11111, name: 'Cá nhân 1', parentId: 1111 },
         { id: 111111, name: 'Đồ dùng cá nhân 1', parentId: 11111 },
+        { id: 1111111, name: 'Some stupid tesing data', parentId: 111111 },
         { id: 111112, name: 'Thông tin cá nhân 1', parentId: 11111 },
-
         { id: 1112, name: 'Nhóm 1 - Đội 2', parentId: 111 },
         { id: 11121, name: 'Cá nhân 1', parentId: 1112 },
-        
         { id: 112, name: 'Nhóm 2', parentId: 11 },
         { id: 1121, name: 'Nhóm 2 - Đội 1', parentId: 112 },
         { id: 11211, name: 'Cá nhân 1', parentId: 1121 },
@@ -32,6 +31,7 @@
         { id: 12, name: 'Phòng KT', parentId: 1 },
         { id: 121, name: 'Nhóm 1', parentId: 12 },
         { id: 122, name: 'Nhóm 2', parentId: 12 },
+        
         { id: 13, name: 'Phòng hành chính', parentId: 1 },
         { id: 131, name: 'Nhóm 1', parentId: 13 },
         { id: 132, name: 'Nhóm 2', parentId: 13 },
@@ -39,15 +39,13 @@
         { id: 14, name: 'Phòng Giám đốc', parentId: 1 },
         { id: 141, name: 'Nhóm 1', parentId: 14 },
         { id: 142, name: 'Nhóm 2', parentId: 14 },
-
         { id: 1411, name: 'Nhóm 1 - Đội 1', parentId: 141 },
         { id: 14111, name: 'Cá nhân 1', parentId: 1411 },
-
         { id: 1421, name: ' Nhóm 2 - Đội 1', parentId: 142 },
         { id: 14211, name: 'Cá nhân 2', parentId: 1421 },
 
 
-        { id: 2, name: 'FPT', parentId: 999999 },
+        { id: 2, name: 'FPT', parentId: 9999999 },
         { id: 21, name: 'Phòng Giám sát FPT', parentId: 2 },
         { id: 211, name: 'Nhóm 1', parentId: 21 },
         { id: 212, name: 'Nhóm 2', parentId: 21 },
@@ -55,13 +53,21 @@
         { id: 221, name: 'Nhóm 1', parentId: 22 },
         { id: 222, name: 'Nhóm 2', parentId: 22 },
 
-        { id: 3, name: 'VNPAY', parentId: 999999 },
+        { id: 3, name: 'VNPAY', parentId: 9999999 },
         { id: 31, name: 'Phòng GTGT', parentId: 3 },
         { id: 311, name: 'Nhóm 1', parentId: 31 },
         { id: 312, name: 'Nhóm 2', parentId: 31 },
         { id: 32, name: 'Phòng Vận hành', parentId: 3 },
         { id: 321, name: 'Nhóm 1', parentId: 32 },
         { id: 322, name: 'Nhóm 2', parentId: 32 },
+
+        { id: 4, name: 'Any', parentId: 9999999 },
+        { id: 41, name: 'Phòng GTGT', parentId: 4 },
+        { id: 411, name: 'Nhóm 1', parentId: 41 },
+        { id: 412, name: 'Nhóm 2', parentId: 41 },
+        { id: 42, name: 'Phòng Vận hành', parentId: 4 },
+        { id: 421, name: 'Nhóm 1', parentId: 42 },
+        { id: 422, name: 'Nhóm 2', parentId: 42 },
     ];
 
 
