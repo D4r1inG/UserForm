@@ -1,4 +1,4 @@
-<!DOCTYPE html>
++<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,19 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bai 2</title>
 </head>
-
 <body></body>
-
 </html>
 <script>
     const data = [
         { id: 999999, name: 'Phòng to nhất', parentId: null },
         { id: 1, name: 'GHTK', parentId: 999999 },
         { id: 11, name: 'Phòng CNTT', parentId: 1 },
-
         { id: 111, name: 'Nhóm 1', parentId: 11 },
         { id: 1111, name: 'Nhóm 1 - Đội 1', parentId: 111 },
         { id: 11111, name: 'Cá nhân 1', parentId: 1111 },
+        { id: 111111, name: 'Đồ dùng cá nhân 1', parentId: 11111 },
+        { id: 111112, name: 'Thông tin cá nhân 1', parentId: 11111 },
+
         { id: 1112, name: 'Nhóm 1 - Đội 2', parentId: 111 },
         { id: 11121, name: 'Cá nhân 1', parentId: 1112 },
         
@@ -84,11 +84,10 @@
         let firstChildArr = newData.filter(item => item.parentId === parentID)
 
         return firstChildArr.map(item => {
-            let newItem = {
+            return newItem = {
                 ...item,
                 children: handleChildren(item.id, data)
             }
-            return newItem
         })
     }
 
