@@ -39,6 +39,7 @@ html {
     transform: translateX(calc(100% + 20px));
     transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     overflow: hidden;
+    margin-top: 15px;
 }
 
 .noti.active {
@@ -90,7 +91,7 @@ html {
 }
 
 .noti .noti-progress.active:before {
-    animation: progress 2s linear forwards;
+    animation: progress 3s linear forwards;
 }
 
 @keyframes progress {

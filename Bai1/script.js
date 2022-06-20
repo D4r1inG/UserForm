@@ -16,6 +16,8 @@ const myModal = document.getElementById("myModal")
 const closeBtn = document.querySelector(".close")
 const URL_API = 'https://62adc8f4b735b6d16a39c794.mockapi.io/users'
 
+const myNofity = document.getElementById('myNofity')
+
 btnReset.addEventListener("click", () => {
     for (let i = 0; i < 4; i++) {
         myForm[i].value = ''
@@ -27,7 +29,7 @@ async function getUser(url) {
         let res = await fetch(url)
         return res.json()
     } catch (err) {
-        createNotification('Oppsy!? Something went wrong!', false)
+        createNotification('Oppsie!? Something went wrong!', false)
         console.log(err)
     }
 }
@@ -100,7 +102,7 @@ const handleSubmit = async (e) => {
             renderUser(URL_API, [])
         }
     } catch (err) {
-        createNotification('Oppsy!? Something went wrong!', false)
+        createNotification('Oppsie!? Something went wrong!', false)
         console.log(err)
     }
 
@@ -123,7 +125,7 @@ const handleDelete = async (e) => {
             renderUser('', userList)
         }
     } catch (err) {
-        createNotification('Oppsy!? Something went wrong!', false)
+        createNotification('Oppsie!? Something went wrong!', false)
         console.log(err)
     }
 }
@@ -145,7 +147,7 @@ const handleEdit = async (e) => {
             renderUser('', newList)
         }
     } catch (err) {
-        createNotification('Oppsy!? Something went wrong!', false)
+        createNotification('Oppsie!? Something went wrong!', false)
         console.log(err)
     }
     myModal.style.display = "none"
@@ -188,25 +190,36 @@ const showModal = (e) => {
 }
 
 const createNotification = (mess, check) => {
-    notiText.innerHTML = mess
-    notiContainer.classList.add('active')
-    notiProgress.classList.add('active')
 
-    if (!check) {
-        notiCheck.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>'
-        notiContainer.style.borderLeftColor = failColor
-        notiCheck.style.backgroundColor = failColor
-    } else {
-        notiCheck.innerHTML = '<i class="fa fa-check" aria-hidden="true"></i>'
-        notiContainer.style.borderLeftColor = successColor
-        notiCheck.style.backgroundColor = successColor
-    }
+    let iEle = check ? '<i class="fa fa-check" aria-hidden="true"></i>' : '<i class="fa fa-times" aria-hidden="true"></i>'
+    let notiContainer = document.createElement("div")
+    let notiProgress = document.createElement("div")
+
+    notiProgress.classList.add("noti-progress")
+    notiContainer.classList.add('noti')
+    notiContainer.style.borderLeftColor = check ? successColor : failColor
+
+    notiContainer.innerHTML = `
+        <div class="noti-content">
+            <div class="noti-check" style="background-color: ${check ? successColor : failColor};">
+           ${iEle}
+            </div>
+        <div class="noti-text">${mess}</div>
+        </div>
+    `
+    notiContainer.append(notiProgress)
+    myNofity.append(notiContainer)
+
+    setTimeout(() => {
+        notiProgress.classList.add('active')
+        notiContainer.classList.add('active')
+    })
 
     setTimeout(() => {
         notiProgress.classList.remove('active')
         notiContainer.classList.remove('active')
-    }, 2000)
-
+        notiContainer.remove()
+    }, 3000)
 }
 
 closeBtn.onclick = function () {
