@@ -216,8 +216,6 @@ const createNotification = (mess, check) => {
     })
 
     setTimeout(() => {
-        notiProgress.classList.remove('active')
-        notiContainer.classList.remove('active')
         notiContainer.remove()
     }, 3000)
 }
