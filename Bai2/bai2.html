@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bai 2</title>
+</head>
+
+<body></body>
+
+</html>
+<script>
+    const data = [
+        { id: 999999, name: 'Phòng to nhất', parentId: null },
+        { id: 1, name: 'GHTK', parentId: 999999 },
+        { id: 11, name: 'Phòng CNTT', parentId: 1 },
+        { id: 111, name: 'Nhóm 1', parentId: 11 },
+        { id: 112, name: 'Nhóm 2', parentId: 11 },
+        { id: 12, name: 'Phòng KT', parentId: 1 },
+        { id: 121, name: 'Nhóm 1', parentId: 12 },
+        { id: 122, name: 'Nhóm 2', parentId: 12 },
+        { id: 13, name: 'Phòng hành chính', parentId: 1 },
+        { id: 131, name: 'Nhóm 1', parentId: 13 },
+        { id: 132, name: 'Nhóm 2', parentId: 13 },
+
+        { id: 14, name: 'Phòng Giám đốc', parentId: 1 },
+        { id: 141, name: 'Nhóm 1', parentId: 14 },
+        { id: 142, name: 'Nhóm 2', parentId: 14 },
+
+        { id: 1411, name: 'Đội 1', parentId: 141 },
+        { id: 14111, name: 'Cá nhân 1', parentId: 1411 },
+
+        { id: 1421, name: 'Đội 2', parentId: 142 },
+        { id: 14211, name: 'Cá nhân 2', parentId: 1421 },
+
+
+        { id: 2, name: 'FPT', parentId: 999999 },
+        { id: 21, name: 'Phòng Giám sát FPT', parentId: 2 },
+        { id: 211, name: 'Nhóm 1', parentId: 21 },
+        { id: 212, name: 'Nhóm 2', parentId: 21 },
+        { id: 22, name: 'Phòng Pháp chế', parentId: 2 },
+        { id: 221, name: 'Nhóm 1', parentId: 22 },
+        { id: 222, name: 'Nhóm 2', parentId: 22 },
+
+        { id: 3, name: 'VNPAY', parentId: 999999 },
+        { id: 31, name: 'Phòng GTGT', parentId: 3 },
+        { id: 311, name: 'Nhóm 1', parentId: 31 },
+        { id: 312, name: 'Nhóm 2', parentId: 31 },
+        { id: 32, name: 'Phòng Vận hành', parentId: 3 },
+        { id: 321, name: 'Nhóm 1', parentId: 32 },
+        { id: 322, name: 'Nhóm 2', parentId: 32 },
+    ];
+
+
+
+
+    const transferData = (data) => {
+        let parentID = data.map(item => item.id).reduce((pevValue, curValue) => {
+            return (pevValue > curValue) ? pevValue : curValue
+        })
+        let parentELE = data.find(item => item.id === parentID)
+
+        return newData = {
+            ...parentELE,
+            children: handleChildren(parentID, data)
+        }
+    }
+
+    const handleChildren = (parentID, data) => {
+        let newData = data.filter(item => item.id !== parentID)
+        let firstChildArr = newData.filter(item => item.parentId === parentID)
+
+        return firstChildArr.map(item => {
+            let newItem = {
+                ...item,
+                children: handleChildren(item.id, data)
+            }
+            return newItem
+        })
+    }
+
+
+    console.log(transferData(data))
+
+    // Chuyển data sang dạng sau
+
+    // const datanew = {
+    //     id:999999,
+    //     name: 'Phòng to nhất',
+    //     parentId: null,
+    //     children: [
+    //         {
+    //             id: 1,
+    //             name: 'GHTK',
+    //             children: [
+    //                 {
+    //                     id: 11,
+    //                     name: 'Phòng CNTT',
+    //                     parentId: 1,
+    //                     childrens: [
+    //                         { id: 111, name: 'Nhóm 1', parentId: 11 },
+    //                         { id: 112, name: 'Nhóm 2', parentId: 11 },
+    //                     ]
+    //                 },
+    //                 {
+    //                     id: 12,
+    //                     name: 'Phòng KT',
+    //                     parentId: 1,
+    //                     childrens: [
+    //                         { id: 121, name: 'Nhóm 1', parentId: 12 },
+    //                         { id: 122, name: 'Nhóm 2', parentId: 12 },
+    //                     ]
+    //                 },
+    //             ]
+    //         },
+    //         {
+    //             id: 2,
+    //             name: 'FPT',
+    //             children: [
+    //                 {
+    //                     id: 21,
+    //                     name: 'Phòng Giám sát FPT',
+    //                     parentId: 2,
+    //                     childrens: [
+    //                         { id: 211, name: 'Nhóm 1', parentId: 21 },
+    //                         { id: 212, name: 'Nhóm 2', parentId: 21 },
+    //                     ]
+    //                 },
+    //                 {
+    //                     id: 22,
+    //                     name: 'Phòng Pháp chế',
+    //                     parentId: 2,
+    //                     childrens: [
+    //                         { id: 221, name: 'Nhóm 1', parentId: 22 },
+    //                         { id: 222, name: 'Nhóm 2', parentId: 22 },
+    //                     ]
+    //                 },
+    //             ]
+    //         },
+    //         {
+    //             id: 3,
+    //             name: 'VNPAY',
+    //             children: [
+    //                 {
+    //                     id: 31,
+    //                     name: 'Phòng GTGT',
+    //                     parentId: 3,
+    //                     childrens: [
+    //                         { id: 311, name: 'Nhóm 1', parentId: 31 },
+    //                         { id: 312, name: 'Nhóm 2', parentId: 31 },
+    //                     ]
+    //                 },
+    //                 {
+    //                     id: 32,
+    //                     name: 'Phòng Vận hành',
+    //                     parentId: 3,
+    //                     childrens: [
+    //                         { id: 321, name: 'Nhóm 1', parentId: 32 },
+    //                         { id: 322, name: 'Nhóm 2', parentId: 32 },
+    //                     ]
+    //                 },
+    //             ]
+    //         }
+    //     ]
+    // }
+
+
+</script>
