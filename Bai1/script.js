@@ -192,8 +192,6 @@ const createNotification = (mess, check) => {
     notiContainer.classList.add('active')
     notiProgress.classList.add('active')
 
-    console.log(notiContainer)
-
     if (!check) {
         notiCheck.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>'
         notiContainer.style.borderLeftColor = failColor
