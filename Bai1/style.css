@@ -41,7 +41,7 @@ html {
     overflow: hidden;
 }
 
-.noti[target].active {
+.noti.active {
     transform: translateX(0);
 }
 
@@ -89,7 +89,7 @@ html {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.noti[target] .noti-progress.active:before {
+.noti .noti-progress.active:before {
     animation: progress 2s linear forwards;
 }
 

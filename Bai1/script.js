@@ -6,6 +6,11 @@ const btnReset = document.querySelector(".btn_reset")
 const myForm = document.getElementById('myform')
 const valueInputList = document.querySelectorAll(".form__field")
 
+const notiContainer = document.querySelector('.noti')
+const notiProgress = document.querySelector('.noti-progress')
+const notiText = document.querySelector('.noti-text')
+const notiCheck = document.querySelector('.noti-check')
+
 const modalContent = document.querySelector(".modal-content")
 const myModal = document.getElementById("myModal")
 const closeBtn = document.querySelector(".close")
@@ -183,14 +188,11 @@ const showModal = (e) => {
 }
 
 const createNotification = (mess, check) => {
-    let notiContainer = document.querySelector('.noti')
-    let notiProgress = document.querySelector('.noti-progress')
-    let notiText = document.querySelector('.noti-text')
-    let notiCheck = document.querySelector('.noti-check')
-
     notiText.innerHTML = mess
     notiContainer.classList.add('active')
     notiProgress.classList.add('active')
+
+    console.log(notiContainer)
 
     if (!check) {
         notiCheck.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>'
