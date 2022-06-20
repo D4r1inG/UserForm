@@ -9,13 +9,20 @@ const valueInputList = document.querySelectorAll(".form__field")
 const modalContent = document.querySelector(".modal-content")
 const myModal = document.getElementById("myModal")
 const closeBtn = document.querySelector(".close")
+const URL_API = 'https://62adc8f4b735b6d16a39c794.mockapi.io/users'
 
+btnReset.addEventListener("click", () => {
+    for (let i = 0; i < 4; i++) {
+        myForm[i].value = ''
+    }
+})
 
 async function getUser(url) {
     try {
         let res = await fetch(url)
         return res.json()
     } catch (err) {
+        createNotification('Oppsy!? Something went wrong!', false)
         console.log(err)
     }
 }
@@ -37,20 +44,18 @@ async function renderUser(url, list) {
             </td>
         </tr>
         `
-
     })
 
     let Tbody = document.getElementById("Table_body")
     Tbody.innerHTML = html
 
     let btnDeletes = document.querySelectorAll(".btn_delete")
-    let btnEdit = document.querySelectorAll(".btn_edit")
+    let btnEdits = document.querySelectorAll(".btn_edit")
 
     btnDeletes.forEach(item => item.addEventListener("click", handleDelete))
-    btnEdit.forEach(item => item.addEventListener("click", showModal))
+    btnEdits.forEach(item => item.addEventListener("click", showModal))
 }
-
-renderUser('https://62adc8f4b735b6d16a39c794.mockapi.io/users', [])
+renderUser(URL_API, [])
 
 
 const generateUserId = (list) => {
@@ -69,43 +74,81 @@ const handleChange = (e) => {
 valueInputList.forEach(item => item.addEventListener("blur", handleChange))
 
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault()
-    userList.push({ ...currentUser, id: generateUserId(userList).toString() })
-    window.scrollTo({
-        top: 1000,
-        behavior: "smooth"
-    })
-    createNotification("Submit successfully!", true)
-    renderUser("", userList)
+    let newUser = { ...currentUser, id: generateUserId(userList).toString() }
+    try {
+        let res = await fetch(URL_API, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(newUser),
+        })
+        if (res.status === 201) {
+            userList.push(newUser)
+            window.scrollTo({
+                top: 1000,
+                behavior: "smooth"
+            })
+            createNotification("Submit successfully!", true)
+            renderUser(URL_API, [])
+        }
+    } catch (err) {
+        createNotification('Oppsy!? Something went wrong!', false)
+        console.log(err)
+    }
+
 }
 myForm.addEventListener("submit", handleSubmit)
 
 
-const handleResetForm = () => {
-    for (let i = 0; i < 4; i++) {
-        myForm[i].value = ''
+const handleDelete = async (e) => {
+    let userDeleteID = e.target.attributes[0].value
+    try {
+        let res = await fetch(URL_API + `/${userDeleteID}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        })
+        if (res.status === 200) {
+            userList = userList.filter(user => user.id !== userDeleteID)
+            createNotification("User deleted!", true)
+            renderUser('', userList)
+        }
+    } catch (err) {
+        createNotification('Oppsy!? Something went wrong!', false)
+        console.log(err)
     }
 }
-btnReset.addEventListener("click", () => { handleResetForm() })
 
 
-const handleDelete = (e) => {
-    userList = userList.filter(user => user.id !== e.target.attributes[0].value)
-    createNotification("User deleted!", true)
-    renderUser('', userList)
-}
-
-const handleEdit = (e) => {
+const handleEdit = async (e) => {
     e.preventDefault()
-    let newList = userList.map(user => user.id === currentUser.id ? currentUser : user)
-    createNotification("Changes have been saved!", true)
-    renderUser('', newList)
+    try {
+        let res = await fetch(URL_API + `/${currentUser.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(currentUser)
+        })
+        if (res.status === 200) {
+            let newList = userList.map(user => user.id === currentUser.id ? currentUser : user)
+            createNotification("Changes have been saved!", true)
+            renderUser('', newList)
+        }
+    } catch (err) {
+        createNotification('Oppsy!? Something went wrong!', false)
+        console.log(err)
+    }
     myModal.style.display = "none"
 }
 
 const showModal = (e) => {
     let userEdit = userList.find(user => user.id === e.target.attributes[0].value)
+
     myModal.style.display = "block"
     currentUser = { ...userEdit }
     modalContent.innerHTML = `
