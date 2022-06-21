@@ -118,7 +118,7 @@ const handleDelete = (e) => {
     let btnList = popConfirm.querySelectorAll(".cornfirm_btn")
 
     popConfirmText.innerHTML = `Xác nhận xóa ${userDelete.fullName}`
-    popConfirm.classList.add('active')
+    popConfirm.style.transform = 'scale(1)'
 
     btnList[0].addEventListener('click', async () => {
         try {
@@ -140,8 +140,7 @@ const handleDelete = (e) => {
     })
 
     btnList[1].addEventListener('click', () => {
-        popConfirm.classList.remove('active')
-
+        popConfirm.style.transform = 'scale(0)'
     })
 
     // window.onclick = function (e) {
@@ -171,13 +170,13 @@ const handleEdit = async (e) => {
         createNotification('Oppsie!? Something went wrong!', false)
         console.log(err)
     }
-    myModal.style.display = "none"
+    myModal.style.transform = "scale(0)"
 }
 
 const showModal = (e) => {
     currentUser = userList.find(user => user.id === e.target.attributes[0].value)
 
-    myModal.style.display = "block"
+    myModal.style.transform = "scale(1)"
     modalContent.innerHTML = `
             <form>
                 <h2 class='heading'>Chỉnh sửa người dùng ${currentUser.fullName}</h2>
@@ -209,6 +208,18 @@ const showModal = (e) => {
     modalSaveBtn.addEventListener("click", handleEdit)
 }
 
+closeBtn.onclick = function () {
+    myModal.style.transform = "scale(0)"
+
+}
+
+window.onclick = function (event) {
+    if (event.target == myModal) {
+        myModal.style.transform = "scale(0)"
+    }
+}
+
+
 const createNotification = (mess, check) => {
 
     let iEle = check ? '<i class="fa fa-check" aria-hidden="true"></i>' : '<i class="fa fa-times" aria-hidden="true"></i>'
@@ -238,14 +249,4 @@ const createNotification = (mess, check) => {
     setTimeout(() => {
         notiContainer.remove()
     }, 3000)
-}
-
-closeBtn.onclick = function () {
-    myModal.style.display = "none";
-}
-
-window.onclick = function (event) {
-    if (event.target == myModal) {
-        myModal.style.display = "none";
-    }
 }
