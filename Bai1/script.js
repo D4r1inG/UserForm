@@ -2,6 +2,8 @@ let currentUser = {}
 let userList = []
 const successColor = '#0ba360'
 const failColor = '#dc3545'
+const Tbody = document.getElementById("Table_body")
+
 const btnReset = document.querySelector(".btn_reset")
 const myForm = document.getElementById('myform')
 const valueInputList = document.querySelectorAll(".form__field")
@@ -52,8 +54,6 @@ async function renderUser(url, list) {
         </tr>
         `
     })
-
-    let Tbody = document.getElementById("Table_body")
     Tbody.innerHTML = html
 
     let btnDeletes = document.querySelectorAll(".btn_delete")
@@ -145,31 +145,30 @@ const handleEdit = async (e) => {
 }
 
 const showModal = (e) => {
-    let userEdit = userList.find(user => user.id === e.target.attributes[0].value)
+    currentUser = userList.find(user => user.id === e.target.attributes[0].value)
 
     myModal.style.display = "block"
-    currentUser = { ...userEdit }
     modalContent.innerHTML = `
             <form>
-                <h2 class='heading'>Chỉnh sửa người dùng ${userEdit.fullName}</h2>
+                <h2 class='heading'>Chỉnh sửa người dùng ${currentUser.fullName}</h2>
                 <div class="form_item">
-                    <input type="input" class="modal__field" name="userName" value=${userEdit.userName} required />
+                    <input type="input" class="modal__field" name="userName" value=${currentUser.userName} required />
                     <label class="form__label">User Name</label>
                 </div>
                 <div class="form_item">
-                    <input type="input" class="modal__field" name="fullName"  value=${userEdit.fullName} required />
+                    <input type="input" class="modal__field" name="fullName"  value=${currentUser.fullName} required />
                     <label class="form__label">Full Name</label>
                 </div>
                 <div class="form_item">
-                    <input type="input" class="modal__field" name="email"  value=${userEdit.email} required />
+                    <input type="input" class="modal__field" name="email"  value=${currentUser.email} required />
                     <label class="form__label">Email</label>
                 </div>
                 <div class="form_item">
-                    <input type="input" class="modal__field" name="phoneNumber"  value=${userEdit.phoneNumber} required />
+                    <input type="input" class="modal__field" name="phoneNumber"  value=${currentUser.phoneNumber} required />
                     <label class="form__label">Phone number</label>
                 </div>
                 <div class="row modalBtn">
-                    <button data-user=${userEdit.id} type="submit" class="modal_save btn">Save Changes</button>
+                    <button type="submit" class="modal_save btn">Save Changes</button>
                 </div>
             </form>
     `
