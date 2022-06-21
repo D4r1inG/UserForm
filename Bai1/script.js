@@ -2,6 +2,8 @@ let currentUser = {}
 let userList = []
 const successColor = '#0ba360'
 const failColor = '#dc3545'
+const URL_API = 'https://62adc8f4b735b6d16a39c794.mockapi.io/users'
+
 const Tbody = document.getElementById("Table_body")
 
 const btnReset = document.querySelector(".btn_reset")
@@ -16,7 +18,6 @@ const notiCheck = document.querySelector('.noti-check')
 const modalContent = document.querySelector(".modal-content")
 const myModal = document.getElementById("myModal")
 const closeBtn = document.querySelector(".close")
-const URL_API = 'https://62adc8f4b735b6d16a39c794.mockapi.io/users'
 
 const myNofity = document.getElementById('myNofity')
 
@@ -40,8 +41,7 @@ async function renderUser(url, list) {
     userList = url === '' ? list : await getUser(url)
     let html = ""
     userList.forEach((user, index) => {
-        html += `
-
+        html += `   
         <tr>
             <td>${index + 1}</td>
             <td>${user.userName}</td>
@@ -49,7 +49,7 @@ async function renderUser(url, list) {
             <td>${user.email}</td>
             <td>${user.phoneNumber}</td>
             <td style="position: relative;">
-                <div class="pop_confirm" data-user=${user.id}>
+                <div class="pop_confirm" data-user=${user.id} >
                     <div id="pop_confirm_text"></div>
                         <div class="row">
                             <button class="cornfirm_btn">Yes!</button>
@@ -118,7 +118,7 @@ const handleDelete = (e) => {
     let btnList = popConfirm.querySelectorAll(".cornfirm_btn")
 
     popConfirmText.innerHTML = `Xác nhận xóa ${userDelete.fullName}`
-    popConfirm.style.display = 'block'
+    popConfirm.classList.add('active')
 
     btnList[0].addEventListener('click', async () => {
         try {
@@ -140,8 +140,9 @@ const handleDelete = (e) => {
     })
 
     btnList[1].addEventListener('click', () => {
-        popConfirm.style.display = 'none'
-    })  
+        popConfirm.classList.remove('active')
+
+    })
 
     // window.onclick = function (e) {
     //     if (e.target == popConfirm) {

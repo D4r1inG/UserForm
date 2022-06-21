@@ -162,7 +162,12 @@ table tbody td {
     width: max-content;
     border-radius: 10px;
     z-index: 11;
-    display: none;
+    transform: scale(0);
+    transition: all .5s;
+}
+
+.pop_confirm.active{
+    transform: scale(1);
 }
 
 .pop_confirm::after {
