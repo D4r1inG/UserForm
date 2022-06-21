@@ -41,13 +41,21 @@ async function renderUser(url, list) {
     let html = ""
     userList.forEach((user, index) => {
         html += `
+
         <tr>
             <td>${index + 1}</td>
             <td>${user.userName}</td>
             <td>${user.fullName}</td>
             <td>${user.email}</td>
             <td>${user.phoneNumber}</td>
-            <td>
+            <td style="position: relative;">
+                <div class="pop_confirm" data-user=${user.id}>
+                    <div id="pop_confirm_text"></div>
+                        <div class="row">
+                            <button class="cornfirm_btn">Yes!</button>
+                            <button class="cornfirm_btn">Cancel</button>
+                        </div>
+                    </div>
                 <span data-user=${user.id} class="btn_delete">Delete</span>
                 <span data-user=${user.id} class="btn_edit">Edit</span>
             </td>
@@ -74,7 +82,7 @@ valueInputList.forEach(item => item.addEventListener("blur", handleChange))
 
 const handleSubmit = async (e) => {
     e.preventDefault()
-    let newUser = { ...currentUser}
+    let newUser = { ...currentUser }
     try {
         let res = await fetch(URL_API, {
             method: 'POST',
@@ -101,24 +109,45 @@ const handleSubmit = async (e) => {
 myForm.addEventListener("submit", handleSubmit)
 
 
-const handleDelete = async (e) => {
+const handleDelete = (e) => {
     let userDeleteID = e.target.attributes[0].value
-    try {
-        let res = await fetch(URL_API + `/${userDeleteID}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-type': 'application/json'
-            },
-        })
-        if (res.status === 200) {
-            userList = userList.filter(user => user.id !== userDeleteID)
-            createNotification("User deleted!", true)
-            renderUser('', userList)
+    let userDelete = userList.find(user => user.id === userDeleteID)
+
+    let popConfirm = document.querySelector(`[data-user="${userDeleteID}"]`)
+    let popConfirmText = popConfirm.querySelector('#pop_confirm_text')
+    let btnList = popConfirm.querySelectorAll(".cornfirm_btn")
+
+    popConfirmText.innerHTML = `Xác nhận xóa ${userDelete.fullName}`
+    popConfirm.style.display = 'block'
+
+    btnList[0].addEventListener('click', async () => {
+        try {
+            let res = await fetch(URL_API + `/${userDeleteID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+            })
+            if (res.status === 200) {
+                userList = userList.filter(user => user.id !== userDeleteID)
+                createNotification("User deleted!", true)
+                renderUser('', userList)
+            }
+        } catch (err) {
+            createNotification('Oppsie!? Something went wrong!', false)
+            console.log(err)
         }
-    } catch (err) {
-        createNotification('Oppsie!? Something went wrong!', false)
-        console.log(err)
-    }
+    })
+
+    btnList[1].addEventListener('click', () => {
+        popConfirm.style.display = 'none'
+    })  
+
+    // window.onclick = function (e) {
+    //     if (e.target == popConfirm) {
+    //         popConfirm.style.display = "none";
+    //     }
+    // }
 }
 
 
