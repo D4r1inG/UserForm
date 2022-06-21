@@ -65,15 +65,6 @@ async function renderUser(url, list) {
 renderUser(URL_API, [])
 
 
-const generateUserId = (list) => {
-    let userIdList = list.map(user => +user.id)
-    let newId
-    do {
-        newId = Math.floor(Math.random() * list.length + 1) + 1
-    } while (userIdList.includes(newId, 0))
-    return newId
-}
-
 const handleChange = (e) => {
     const { name, value } = e.target
     currentUser[name] = value
@@ -83,7 +74,7 @@ valueInputList.forEach(item => item.addEventListener("blur", handleChange))
 
 const handleSubmit = async (e) => {
     e.preventDefault()
-    let newUser = { ...currentUser, id: generateUserId(userList).toString() }
+    let newUser = { ...currentUser}
     try {
         let res = await fetch(URL_API, {
             method: 'POST',
