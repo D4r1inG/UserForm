@@ -94,7 +94,7 @@ const handleSubmit = async (e) => {
         if (res.status === 201) {
             userList.push(newUser)
             window.scrollTo({
-                top: 1000,
+                top: document.body.scrollHeight,
                 behavior: "smooth"
             })
             createNotification("Submit successfully!", true)
