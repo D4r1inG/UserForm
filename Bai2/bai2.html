@@ -74,14 +74,10 @@
 
 
     const transferData = (data) => {
-        let parentID = data.map(item => item.id).reduce((pevValue, curValue) => {
-            return (pevValue > curValue) ? pevValue : curValue
-        })
-        let parentELE = data.find(item => item.id === parentID)
-
+        let parentELE = data.find(item => item.parentId === null)
         return newData = {
             ...parentELE,
-            children: handleChildren(parentID, data)
+            children: handleChildren(parentELE.id, data)
         }
     }
 
